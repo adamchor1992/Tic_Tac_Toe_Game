@@ -16,13 +16,13 @@ def create_new_game_board():
     return game_board
 
 
-def generate_empty_cells_coordinates():
+def get_empty_cells_coordinates(game_board):
     empty_cells_coordinates = []
-
-    for row in range(1, ROW_COUNT + 1):
-        for column in range(1, COLUMN_COUNT + 1):
-            empty_cells_coordinates.append((row, column))
     
+    for cells_coordinates in game_board:
+        if game_board[cells_coordinates] == NULL_TOKEN:
+            empty_cells_coordinates.append(cells_coordinates)
+
     return empty_cells_coordinates
 
 
@@ -131,21 +131,25 @@ def congratulate_winner(token):
     print("====================================================== TOKEN {} WINS ======================================================".format(token))
    
 
-def player_move(game_board, empty_cells_coordinates):
+def player_move(game_board):
+    empty_cells_coordinates = get_empty_cells_coordinates(game_board)
     coordinates = player_get_next_move(empty_cells_coordinates)
     mark_cell(game_board, X_TOKEN, coordinates)
     empty_cells_coordinates.remove(coordinates)
 
 
-def computer_move(game_board, empty_cells_coordinates):
-    coordinates = computer_get_next_move(game_board, empty_cells_coordinates)
+def computer_move(game_board):
+    empty_cells_coordinates = get_empty_cells_coordinates(game_board)
+    coordinates = computer_get_next_move(game_board)
     mark_cell(game_board, O_TOKEN, coordinates)
     empty_cells_coordinates.remove(coordinates)
 
 
-def computer_get_next_move(game_board, empty_cells_coordinates):
-    def check_win_possible_in_next_move(game_board, empty_cells_coordinates):
+def computer_get_next_move(game_board):
+    def check_win_possible_in_next_move(game_board):
         """Check if win in next move is possible, if so - choose this move"""
+        empty_cells_coordinates = get_empty_cells_coordinates(game_board)
+        
         for cell_coordinates in empty_cells_coordinates:
             game_board_copy = game_board.copy()
             mark_cell(game_board_copy, O_TOKEN, cell_coordinates)
@@ -153,8 +157,10 @@ def computer_get_next_move(game_board, empty_cells_coordinates):
         if check_win(game_board_copy) == O_TOKEN:
             return cell_coordinates
 
-    def check_lose_possible_in_next_move(game_board, empty_cells_coordinates):
+    def check_lose_possible_in_next_move(game_board):
         """Check if lose in next move is possible, if so - block this move"""
+        empty_cells_coordinates = get_empty_cells_coordinates(game_board)
+        
         for cell_coordinates in empty_cells_coordinates:
             game_board_copy = game_board.copy()
             mark_cell(game_board_copy, X_TOKEN, cell_coordinates)
@@ -162,15 +168,15 @@ def computer_get_next_move(game_board, empty_cells_coordinates):
         if check_win(game_board_copy) == X_TOKEN:
             return cell_coordinates
 
-    def check_next_best_move(game_board, empty_cells_coordinates):
+    def check_next_best_move(game_board):
         """Checks for best move and returns it"""
-        pass
+        empty_cells_coordinates = get_empty_cells_coordinates(game_board)
 
-    coordinates_A = check_win_possible_in_next_move(game_board, empty_cells_coordinates)
+    coordinates_A = check_win_possible_in_next_move(game_board)
     
-    coordinates_B = check_lose_possible_in_next_move(game_board, empty_cells_coordinates)
+    coordinates_B = check_lose_possible_in_next_move(game_board)
 
-    coordinates_C = check_next_best_move(game_board, empty_cells_coordinates)
+    coordinates_C = check_next_best_move(game_board)
 
     if coordinates_A:
         print("Option A")
@@ -183,25 +189,24 @@ def computer_get_next_move(game_board, empty_cells_coordinates):
         coordinates = coordinates_C
     else:
         print("RANDOM MOVE")
-        coordinates = random.choice(empty_cells_coordinates)
+        coordinates = random.choice(get_empty_cells_coordinates(game_board))
 
     return coordinates
 
 
 def main():
     game_board = create_new_game_board()
-    empty_cells_coordinates = generate_empty_cells_coordinates()
 
     print_game_board(game_board)
 
     players = itertools.cycle(["Player", "Computer"])
 
-    while len(empty_cells_coordinates) > 0: 
+    while len(get_empty_cells_coordinates(game_board)) > 0: 
         if next(players) == "Player":
-            player_move(game_board, empty_cells_coordinates)
+            player_move(game_board)
             print("PLAYER MOVE")
         else:
-            computer_move(game_board, empty_cells_coordinates)
+            computer_move(game_board)
             print("COMPUTER MOVE")
 
         print_game_board(game_board)
