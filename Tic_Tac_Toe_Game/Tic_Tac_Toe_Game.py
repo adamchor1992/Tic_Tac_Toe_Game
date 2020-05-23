@@ -208,7 +208,7 @@ def main():
 
     players = itertools.cycle(["Player", "Computer"])
 
-    while len(get_empty_cells_coordinates(game_board)) > 0: 
+    while get_empty_cells_coordinates(game_board): 
         if next(players) == "Player":
             player_move(game_board)
             print("PLAYER MOVE")

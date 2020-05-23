@@ -7,6 +7,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tic_Tac_Toe_Game", "Tic_Tac
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tic_Tac_Toe_Tests", "Tic_Tac_Toe_Tests\Tic_Tac_Toe_Tests.pyproj", "{D7C1E617-970E-4219-8BC7-E53E05C4DBF4}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tic_Tac_Toe_Game_GUI", "Tic_Tac_Toe_Game_GUI\Tic_Tac_Toe_Game_GUI.pyproj", "{408BB481-2054-4ABE-A268-E062B843B84D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,8 @@ Global
 		{C257D105-F85B-4221-89F2-E8EB1B98C2B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7C1E617-970E-4219-8BC7-E53E05C4DBF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D7C1E617-970E-4219-8BC7-E53E05C4DBF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{408BB481-2054-4ABE-A268-E062B843B84D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{408BB481-2054-4ABE-A268-E062B843B84D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
