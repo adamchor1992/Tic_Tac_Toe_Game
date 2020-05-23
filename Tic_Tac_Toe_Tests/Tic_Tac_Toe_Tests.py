@@ -85,7 +85,73 @@ class TicTacToeTests(unittest.TestCase):
         self.assertEqual(check_win(game_board), O_TOKEN)
         
 
-    def test_function_computer_move_win_in_next_move(self):
+    def test_function_check_win_all_cases(self):
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (1,1))
+        mark_cell(game_board, O_TOKEN, (1,2))
+        mark_cell(game_board, O_TOKEN, (1,3))
+
+        self.assertEqual(check_win(game_board), O_TOKEN)
+
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (2,1))
+        mark_cell(game_board, O_TOKEN, (2,2))
+        mark_cell(game_board, O_TOKEN, (2,3))
+
+        self.assertEqual(check_win(game_board), O_TOKEN)
+
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (3,1))
+        mark_cell(game_board, O_TOKEN, (3,2))
+        mark_cell(game_board, O_TOKEN, (3,3))
+
+        self.assertEqual(check_win(game_board), O_TOKEN)
+
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (1,1))
+        mark_cell(game_board, O_TOKEN, (2,1))
+        mark_cell(game_board, O_TOKEN, (3,1))
+
+        self.assertEqual(check_win(game_board), O_TOKEN)
+
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (1,2))
+        mark_cell(game_board, O_TOKEN, (2,2))
+        mark_cell(game_board, O_TOKEN, (3,2))
+
+        self.assertEqual(check_win(game_board), O_TOKEN)
+
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (1,3))
+        mark_cell(game_board, O_TOKEN, (2,3))
+        mark_cell(game_board, O_TOKEN, (3,3))
+
+        self.assertEqual(check_win(game_board), O_TOKEN)
+
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (1,1))
+        mark_cell(game_board, O_TOKEN, (2,2))
+        mark_cell(game_board, O_TOKEN, (3,3))
+
+        self.assertEqual(check_win(game_board), O_TOKEN)
+
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (1,3))
+        mark_cell(game_board, O_TOKEN, (2,2))
+        mark_cell(game_board, O_TOKEN, (3,1))
+
+        self.assertEqual(check_win(game_board), O_TOKEN)
+
+
+    def test_function_computer_move_win_in_next_move_case1(self):
         game_board = create_new_game_board()
 
         mark_cell(game_board, O_TOKEN, (1,1))
@@ -96,16 +162,57 @@ class TicTacToeTests(unittest.TestCase):
         self.assertEqual(game_board[(3,3)], O_TOKEN)
 
 
-    #def test_function_computer_move_lose_in_next_move(self):
-    #    game_board = create_new_game_board()
-    #    empty_cells_coordinates = generate_empty_cells_coordinates()
+    def test_function_computer_move_win_in_next_move_case2(self):
+        game_board = create_new_game_board()
 
-    #    mark_cell(game_board, X_TOKEN, (1,3))
-    #    mark_cell(game_board, X_TOKEN, (2,2))
+        mark_cell(game_board, O_TOKEN, (1,1))
+        mark_cell(game_board, O_TOKEN, (1,2))
 
-    #    computer_move(game_board, empty_cells_coordinates)
+        computer_move(game_board)
 
-    #    self.assertEqual(game_board[(3,1)], O_TOKEN)
+        self.assertEqual(game_board[(1,3)], O_TOKEN)
+
+
+    def test_function_computer_move_win_in_next_move_case3(self):
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (1,3))
+        mark_cell(game_board, O_TOKEN, (2,3))
+
+        computer_move(game_board)
+
+        self.assertEqual(game_board[(3,3)], O_TOKEN)
+
+
+    def test_function_computer_move_avoid_lose_in_next_move_case1(self):
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, X_TOKEN, (1,1))
+        mark_cell(game_board, X_TOKEN, (2,2))
+
+        computer_move(game_board)
+
+        self.assertEqual(game_board[(3,3)], O_TOKEN)
+
+    def test_function_computer_move_avoid_lose_in_next_move_case2(self):
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, X_TOKEN, (1,2))
+        mark_cell(game_board, X_TOKEN, (2,2))
+
+        computer_move(game_board)
+
+        self.assertEqual(game_board[(3,2)], O_TOKEN)
+
+    def test_function_computer_move_avoid_lose_in_next_move_case3(self):
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, X_TOKEN, (1,3))
+        mark_cell(game_board, X_TOKEN, (2,2))
+
+        computer_move(game_board)
+
+        self.assertEqual(game_board[(3,1)], O_TOKEN)
 
 
 unittest.main()
