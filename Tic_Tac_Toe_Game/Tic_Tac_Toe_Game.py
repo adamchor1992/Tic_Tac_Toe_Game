@@ -168,31 +168,37 @@ def computer_get_next_move(game_board):
 
     def check_next_best_move(game_board):
         """Checks for best move and returns it"""
+        # First select middle cell, then corners and then other cells
+        move_priorities = [(2,2), (1,1), (1,3), (3,1), (3,3), (2,1), (1,2), (3,2), (2,3)]
+
         empty_cells_coordinates = get_empty_cells_coordinates(game_board)
+
+        for cell_coordinates in move_priorities:
+            if cell_coordinates in empty_cells_coordinates:
+                return cell_coordinates
 
         return None
 
 
-    coordinates_A = check_win_possible_in_next_move(game_board)
+    cell_coordinates = check_win_possible_in_next_move(game_board)
     
-    coordinates_B = check_lose_possible_in_next_move(game_board)
-
-    coordinates_C = check_next_best_move(game_board)
-
-    if coordinates_A:
+    if cell_coordinates:
         print("Option A - going for win")
-        coordinates = coordinates_A
-    elif coordinates_B:
-        print("Option B - avoiding lose")
-        coordinates = coordinates_B
-    elif coordinates_C:
-        print("Option C - choosing non-winning and non-blocking lose best move")
-        coordinates = coordinates_C
+        return cell_coordinates
     else:
-        print("RANDOM MOVE")
-        coordinates = random.choice(get_empty_cells_coordinates(game_board))
-
-    return coordinates
+        cell_coordinates = check_lose_possible_in_next_move(game_board)
+        
+        if cell_coordinates:
+            print("Option B - avoiding lose")
+            return cell_coordinates
+        else:
+            cell_coordinates = check_next_best_move(game_board)
+            
+            if cell_coordinates:
+                print("Option C - choosing non-winning and non-blocking lose best move: ({x},{y})".format(x=cell_coordinates[0], y=cell_coordinates[1]))
+                return cell_coordinates
+            else:
+                assert False, print("================= NO MOVE CHOSEN - CRITICAL ERROR =================")
 
 
 def main():

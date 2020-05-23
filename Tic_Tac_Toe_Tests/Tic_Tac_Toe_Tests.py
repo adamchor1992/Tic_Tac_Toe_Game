@@ -194,6 +194,7 @@ class TicTacToeTests(unittest.TestCase):
 
         self.assertEqual(game_board[(3,3)], O_TOKEN)
 
+
     def test_function_computer_move_avoid_lose_in_next_move_case2(self):
         game_board = create_new_game_board()
 
@@ -203,6 +204,7 @@ class TicTacToeTests(unittest.TestCase):
         computer_move(game_board)
 
         self.assertEqual(game_board[(3,2)], O_TOKEN)
+
 
     def test_function_computer_move_avoid_lose_in_next_move_case3(self):
         game_board = create_new_game_board()
@@ -215,4 +217,41 @@ class TicTacToeTests(unittest.TestCase):
         self.assertEqual(game_board[(3,1)], O_TOKEN)
 
 
-unittest.main()
+    def test_function_computer_move_select_best_non_winning_non_losing_move_case1(self):
+        """First move should always be middle cell"""
+        game_board = create_new_game_board()
+
+        computer_move(game_board)
+
+        self.assertEqual(game_board[(2,2)], O_TOKEN)
+
+
+    def test_function_computer_move_select_best_non_winning_non_losing_move_case2(self):
+        """If middle cell is not empty the next move should be left upper corner cell"""
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, X_TOKEN, (2,2))
+
+        computer_move(game_board)
+
+        self.assertEqual(game_board[(1,1)], O_TOKEN)
+
+
+    def test_function_computer_move_select_best_non_winning_non_losing_move_case3(self):
+        """If middle cell all left upper/lower and right upper corner is not empty the next move should be right lower corner"""
+        game_board = create_new_game_board()
+
+        mark_cell(game_board, O_TOKEN, (1,1))
+        mark_cell(game_board, O_TOKEN, (3,1))
+        mark_cell(game_board, O_TOKEN, (2,3))
+        mark_cell(game_board, X_TOKEN, (2,1))
+        mark_cell(game_board, X_TOKEN, (2,2))
+        mark_cell(game_board, X_TOKEN, (1,3))
+        
+        computer_move(game_board)
+
+        self.assertEqual(game_board[(3,3)], O_TOKEN)
+
+
+if __name__ == "__main__":
+    unittest.main()
