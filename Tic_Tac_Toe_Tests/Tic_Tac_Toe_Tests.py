@@ -20,6 +20,19 @@ class TicTacToeTests(unittest.TestCase):
             self.assertEqual(game_board[cell_coordinates], NULL_TOKEN)
 
 
+    def test_function_restart_game(self):
+        game_board = create_new_game_board()
+
+        game_board[(1,1)] = X_TOKEN
+        game_board[(2,2)] = X_TOKEN
+        game_board[(3,3)] = X_TOKEN
+
+        restart_game(game_board)
+
+        for cell_coordinates in game_board:
+            self.assertEqual(game_board[cell_coordinates], NULL_TOKEN)
+
+
     def test_function_get_empty_cells_coordinates_all_cells_empty(self):
         game_board = create_new_game_board()
 

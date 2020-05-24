@@ -8,12 +8,18 @@ ROW_COUNT = 3
 COLUMN_COUNT = 3
 CELL_COUNT = ROW_COUNT * COLUMN_COUNT
 
+
 def create_new_game_board():
     game_board = {}
     for row in range(1, ROW_COUNT + 1):
         for column in range(1, COLUMN_COUNT + 1):
             game_board[(row, column)] = NULL_TOKEN
     return game_board
+
+
+def restart_game(game_board):
+    for cell_coordinates in game_board:
+        game_board[cell_coordinates] = NULL_TOKEN
 
 
 def get_empty_cells_coordinates(game_board):
@@ -204,27 +210,35 @@ def computer_get_next_move(game_board):
 def main():
     game_board = create_new_game_board()
 
-    print_game_board(game_board)
-
     players = itertools.cycle(["Player", "Computer"])
 
-    while get_empty_cells_coordinates(game_board): 
-        if next(players) == "Player":
-            player_move(game_board)
-            print("PLAYER MOVE")
-        else:
-            computer_move(game_board)
-            print("COMPUTER MOVE")
-
+    while True:
         print_game_board(game_board)
 
-        winning_token = check_win(game_board)
+        while get_empty_cells_coordinates(game_board): 
+            if next(players) == "Player":
+                player_move(game_board)
+                print("PLAYER MOVE")
+            else:
+                computer_move(game_board)
+                print("COMPUTER MOVE")
 
-        if winning_token:
-            congratulate_winner(winning_token)
-            return
-    else:
-        print("Game over, no more valid moves")
+            print_game_board(game_board)
+
+            winning_token = check_win(game_board)
+
+            if winning_token:
+                congratulate_winner(winning_token)
+                break
+        else:
+            print("Game over, no more valid moves")
+
+        user_input = input("Type anything to continue, Type quit to exit program: ")
+
+        if user_input == "quit":
+            break
+        else:
+            restart_game(game_board)
 
 
 if __name__ == "__main__":
