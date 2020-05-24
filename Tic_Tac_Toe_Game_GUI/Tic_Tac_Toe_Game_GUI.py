@@ -15,6 +15,9 @@ class TicTacToeGameGui(tk.Frame):
 
     def cell_clicked(self, cell_coordinates):
         mark_cell(self.game_board, X_TOKEN, cell_coordinates)
+        
+        self.cell_buttons[cell_coordinates].configure(state="disabled")
+        
         self.refresh_gui()
 
         winning_token = check_win(self.game_board)
@@ -27,7 +30,10 @@ class TicTacToeGameGui(tk.Frame):
             print("Game over, no more valid moves")
             self.restart_game()
 
-        computer_move(self.game_board)
+
+        computer_cell_coordinates = computer_move(self.game_board)
+        self.cell_buttons[computer_cell_coordinates].configure(state="disabled")
+        
         self.refresh_gui()
     
         winning_token = check_win(self.game_board)
@@ -55,6 +61,18 @@ class TicTacToeGameGui(tk.Frame):
         self.cell_3_2 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(3,2)], command = lambda: self.cell_clicked((3,2)))
         self.cell_3_3 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(3,3)], command = lambda: self.cell_clicked((3,3)))
         
+        self.cell_buttons = {}
+
+        self.cell_buttons[(1,1)] = self.cell_1_1
+        self.cell_buttons[(1,2)] = self.cell_1_2
+        self.cell_buttons[(1,3)] = self.cell_1_3
+        self.cell_buttons[(2,1)] = self.cell_2_1
+        self.cell_buttons[(2,2)] = self.cell_2_2
+        self.cell_buttons[(2,3)] = self.cell_2_3
+        self.cell_buttons[(3,1)] = self.cell_3_1
+        self.cell_buttons[(3,2)] = self.cell_3_2
+        self.cell_buttons[(3,3)] = self.cell_3_3
+
         self.cell_1_1.grid(row=0,column=0)
         self.cell_1_2.grid(row=0,column=1)
         self.cell_1_3.grid(row=0,column=2)
@@ -93,6 +111,10 @@ class TicTacToeGameGui(tk.Frame):
 
     def restart_game(self):
         restart_game(self.game_board)
+
+        for cell_button in self.cell_buttons.values():
+            cell_button.configure(state="normal")
+
         self.refresh_gui()
 
 

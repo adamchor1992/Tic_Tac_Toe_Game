@@ -138,13 +138,15 @@ def congratulate_winner(token):
    
 
 def player_move(game_board):
-    coordinates = player_get_next_move(game_board)
-    mark_cell(game_board, X_TOKEN, coordinates)
+    cell_coordinates = player_get_next_move(game_board)
+    mark_cell(game_board, X_TOKEN, cell_coordinates)
+    return cell_coordinates
 
 
 def computer_move(game_board):
-    coordinates = computer_get_next_move(game_board)
-    mark_cell(game_board, O_TOKEN, coordinates)
+    cell_coordinates = computer_get_next_move(game_board)
+    mark_cell(game_board, O_TOKEN, cell_coordinates)
+    return cell_coordinates
 
 
 def computer_get_next_move(game_board):
