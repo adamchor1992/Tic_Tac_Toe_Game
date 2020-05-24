@@ -1,7 +1,8 @@
 import tkinter as tk
-from Tic_Tac_Toe_Game import *
+from Tic_Tac_Toe_Logic import *
 
-class Application(tk.Frame):
+
+class TicTacToeGameGui(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self.master = master
@@ -67,7 +68,7 @@ class Application(tk.Frame):
         self.restart_button = tk.Button(self, 
                                         text="Restart", 
                                         fg="red",
-                                        command=self.restart_game())
+                                        command=self.restart_game)
 
         self.restart_button.grid(row=3, column=0, columnspan=3)
 
@@ -76,10 +77,6 @@ class Application(tk.Frame):
                                         fg="red",
                                         command=self.master.destroy)
         self.quit_button.grid(row=4, column=0, columnspan=3)
-
-
-    def method(self):
-        print("Button clicked")
 
 
     def refresh_gui(self):
@@ -95,14 +92,14 @@ class Application(tk.Frame):
 
 
     def restart_game(self):
-        self.game_board = create_new_game_board()
+        restart_game(self.game_board)
         self.refresh_gui()
 
 
 def main():
     root = tk.Tk()
-    app = Application(master=root)
-    app.mainloop()
+    game = TicTacToeGameGui(master=root)
+    game.mainloop()
 
 
 if __name__ == "__main__":

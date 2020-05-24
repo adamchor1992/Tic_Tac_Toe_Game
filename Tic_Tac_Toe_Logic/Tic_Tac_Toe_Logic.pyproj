@@ -2,15 +2,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>c257d105-f85b-4221-89f2-e8eb1b98c2b9</ProjectGuid>
+    <ProjectGuid>bb50ea5c-5b19-40d3-bd84-a7737ac0d890</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Tic_Tac_Toe_Game.py</StartupFile>
+    <StartupFile>Tic_Tac_Toe_Logic.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <Name>Tic_Tac_Toe_Game</Name>
-    <RootNamespace>Tic_Tac_Toe_Game</RootNamespace>
+    <Name>Tic_Tac_Toe_Logic</Name>
+    <RootNamespace>Tic_Tac_Toe_Logic</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Tic_Tac_Toe_Game.py" />
+    <Compile Include="Tic_Tac_Toe_Logic.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

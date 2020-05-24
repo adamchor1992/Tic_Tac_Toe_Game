@@ -27,9 +27,9 @@
     <Compile Include="Tic_Tac_Toe_Tests.py" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tic_Tac_Toe_Game\Tic_Tac_Toe_Game.pyproj">
-      <Name>Tic_Tac_Toe_Game</Name>
-      <Project>{c257d105-f85b-4221-89f2-e8eb1b98c2b9}</Project>
+    <ProjectReference Include="..\Tic_Tac_Toe_Logic\Tic_Tac_Toe_Logic.pyproj">
+      <Name>Tic_Tac_Toe_Logic</Name>
+      <Project>{bb50ea5c-5b19-40d3-bd84-a7737ac0d890}</Project>
       <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
