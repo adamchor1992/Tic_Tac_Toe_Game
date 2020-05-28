@@ -5,8 +5,7 @@
     <ProjectGuid>d7c1e617-970e-4219-8bc7-e53e05c4dbf4</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>Tic_Tac_Toe_Tests.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>..\Tic_Tac_Toe_Logic</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Tic_Tac_Toe_Tests</Name>

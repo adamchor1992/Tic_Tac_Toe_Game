@@ -6,8 +6,7 @@
     <ProjectHome>
     </ProjectHome>
     <StartupFile>Tic_Tac_Toe_Game_Text_Based.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>..\Tic_Tac_Toe_Logic</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Tic_Tac_Toe_Game_Text_Based</Name>

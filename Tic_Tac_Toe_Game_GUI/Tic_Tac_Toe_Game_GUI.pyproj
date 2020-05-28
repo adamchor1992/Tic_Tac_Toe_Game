@@ -5,8 +5,7 @@
     <ProjectGuid>408bb481-2054-4abe-a268-e062b843b84d</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>Tic_Tac_Toe_Game_GUI.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>..\Tic_Tac_Toe_Logic</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>Tic_Tac_Toe_Game_GUI</Name>

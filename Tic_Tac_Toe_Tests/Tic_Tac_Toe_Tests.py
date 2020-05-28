@@ -20,14 +20,14 @@ class TicTacToeTests(unittest.TestCase):
             self.assertEqual(game_board[cell_coordinates], NULL_TOKEN)
 
 
-    def test_function_restart_game(self):
+    def test_function_reset_game_board(self):
         game_board = create_new_game_board()
 
         game_board[(1,1)] = X_TOKEN
         game_board[(2,2)] = X_TOKEN
         game_board[(3,3)] = X_TOKEN
 
-        restart_game(game_board)
+        reset_game_board(game_board)
 
         for cell_coordinates in game_board:
             self.assertEqual(game_board[cell_coordinates], NULL_TOKEN)
@@ -264,6 +264,18 @@ class TicTacToeTests(unittest.TestCase):
         computer_move(game_board)
 
         self.assertEqual(game_board[(3,3)], O_TOKEN)
+
+
+    def test_function_search_for_duplicates_no_duplicates(self):
+        test_list = [(5,3), (1,3), (2,1)]
+
+        self.assertFalse(search_for_duplicates(test_list))
+
+
+    def test_function_search_for_duplicates_1_duplicate(self):
+        test_list = [(5,3), (1,3), (2,1), (1,3)]
+
+        self.assertTrue(search_for_duplicates(test_list))
 
 
 if __name__ == "__main__":

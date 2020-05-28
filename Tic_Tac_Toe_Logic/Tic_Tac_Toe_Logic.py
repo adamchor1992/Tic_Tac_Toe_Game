@@ -10,6 +10,15 @@ CELL_COUNT = ROW_COUNT * COLUMN_COUNT
 
 
 def create_new_game_board():
+    """Creates new game board in form of tuple:string dictionary  {(x,y):TOKEN}
+    
+    Args: 
+        None
+
+    Returns:
+        Dictionary representing game board
+    """
+
     game_board = {}
     for row in range(1, ROW_COUNT + 1):
         for column in range(1, COLUMN_COUNT + 1):
@@ -17,12 +26,30 @@ def create_new_game_board():
     return game_board
 
 
-def restart_game(game_board):
+def reset_game_board(game_board):
+    """Resets game board by assigning NULL tokens to all dictionary values
+
+    Args:
+        game_board: Dictionary representing game board
+
+    Returns:
+        None
+    """
+    
     for cell_coordinates in game_board:
         game_board[cell_coordinates] = NULL_TOKEN
 
 
 def get_empty_cells_coordinates(game_board):
+    """Extracts empty cells coordinates from dictionary representing game board
+
+    Args:
+        game_board: Dictionary representing game board
+
+    Returns:
+        List of coordinates of empty cells
+    """
+    
     empty_cells_coordinates = []
     
     for cells_coordinates in game_board:
@@ -32,84 +59,34 @@ def get_empty_cells_coordinates(game_board):
     return empty_cells_coordinates
 
 
-def print_game_board(game_board):
-    print()
-
-    for row in range(1, ROW_COUNT + 1):
-        for column in range(1, COLUMN_COUNT + 1):
-            print("\t{0}\t".format(game_board[(row, column)]), end = "")
-
-            if column == COLUMN_COUNT:
-                print("")
-            else:
-                print("|", end = "")
-
-        if row == ROW_COUNT:
-            break
-        else:
-            print("-------------------------------------------------")
-
-    print()
-
-
 def mark_cell(game_board, token, cell_coordinates):
-    """Function marks specified cell with chosen token"""
+    """Marks specified cell with chosen token. Raises ValueError if specified coordinates do not exist in game board
+
+    Args:
+        game_board: Dictionary representing game board
+        token: String representing game token
+        cell_coordinates: Tuple of coordinates
+
+    Returns:
+        None
+    """
+
     if cell_coordinates in game_board:
         game_board[cell_coordinates] = token
     else:
         raise ValueError("Cell coordinates do not exist") 
 
 
-def player_get_next_move(game_board):
-    """Function gets processed input coordinates from player and checks if the cell is available"""
-    while True:
-        input_coordinates = input("Type your next move in form of 'x,y':")
-        
-        print("")
-
-        cell_coordinates = process_and_validate_coordinates(input_coordinates)
-
-        if cell_coordinates == None:
-            continue
-        else:
-            if cell_coordinates in get_empty_cells_coordinates(game_board):
-                return cell_coordinates
-            else:
-                print("Chosen cell is not available, try again\n")
-                continue
-
-
-def process_and_validate_coordinates(input_coordinates):
-    """This function converts input string to 2-element tuple of coordinates if the string is valid"""
-    if len(input_coordinates) == 0:
-        print("Empty coordinates, try again\n")
-        return None
-    
-    input_coordinates = input_coordinates.split(',')
-
-    if len(input_coordinates) != 2:
-        print("Wrong number of coordinates, try again\n")
-        return None
-
-    try:
-        coordinate_x = int(input_coordinates[0])
-        coordinate_y = int(input_coordinates[1])
-    except ValueError:
-        print("Cannot convert input coordinates to numbers, try again\n")
-        return None
-
-    if coordinate_x < 1 or coordinate_x > ROW_COUNT:
-        print("Wrong x coordinate, try again\n")
-        return None
-
-    if coordinate_y < 1 or coordinate_y > COLUMN_COUNT:
-        print("Wrong y coordinate, try again\n")
-        return None
-
-    return (coordinate_x, coordinate_y)
-
-
 def check_win(game_board):
+    """Checks if pattern of tokens on a game board matches any of the winning patterns
+
+    Args:
+        game_board: Dictionary representing game board
+
+    Returns:
+        String representing winning token, None otherwise
+    """
+
     tokens = (X_TOKEN, O_TOKEN)
 
     for token in tokens:
@@ -133,25 +110,34 @@ def check_win(game_board):
     return None
 
 
-def congratulate_winner(token):
-    print("====================================================== TOKEN {} WINS ======================================================".format(token))
-   
-
-def player_move(game_board):
-    cell_coordinates = player_get_next_move(game_board)
-    mark_cell(game_board, X_TOKEN, cell_coordinates)
-    return cell_coordinates
-
-
 def computer_move(game_board):
+    """Processes computer move based on the current game board state
+        
+    Args:
+        game_board: Dictionary representing game board
+
+    Returns:
+        Tuple representing cell coordinates
+
+    """
+
     cell_coordinates = computer_get_next_move(game_board)
     mark_cell(game_board, O_TOKEN, cell_coordinates)
     return cell_coordinates
 
 
 def computer_get_next_move(game_board):
+    """Figures out computer's next move
+
+    Args:
+        game_board: Dictionary representing game board
+
+    Returns:
+        Cell coordinates of next move
+    """
+
     def check_win_possible_in_next_move(game_board):
-        """Check if win in next move is possible, if so - choose this move"""
+        """Checks if win in next move is possible, if so - choose this move"""
         for cell_coordinates in get_empty_cells_coordinates(game_board):
             game_board_copy = game_board.copy()
             mark_cell(game_board_copy, O_TOKEN, cell_coordinates)
@@ -163,7 +149,7 @@ def computer_get_next_move(game_board):
 
 
     def check_lose_possible_in_next_move(game_board):
-        """Check if lose in next move is possible, if so - block this move"""
+        """Checks if lose in next move is possible, if so - block this move"""
         for cell_coordinates in get_empty_cells_coordinates(game_board):
             game_board_copy = game_board.copy()
             mark_cell(game_board_copy, X_TOKEN, cell_coordinates)
@@ -176,8 +162,15 @@ def computer_get_next_move(game_board):
 
     def check_next_best_move(game_board):
         """Checks for best move and returns it"""
-        # First select middle cell, then corners and then other cells
+
+        # First select middle cell, then corners and then other cells. It is crucial that this list 
+        # contains all possible cells coordinates and it must not contain duplicates
         move_priorities = [(2,2), (1,1), (1,3), (3,1), (3,3), (2,1), (1,2), (3,2), (2,3)]
+
+        if search_for_duplicates(move_priorities) == True:
+            raise ValueError("Duplicates not allowed")
+
+        assert len(move_priorities) == CELL_COUNT, "List of move priorities must contain all possible cells coordinates, no more and no less"
 
         empty_cells_coordinates = get_empty_cells_coordinates(game_board)
 
@@ -207,3 +200,25 @@ def computer_get_next_move(game_board):
                 return cell_coordinates
             else:
                 assert False, print("================= NO MOVE CHOSEN - CRITICAL ERROR =================")
+
+
+def search_for_duplicates(searched_list):
+    """Searches list for duplicates
+
+    Args:
+        searched_list: List to be searched
+
+    Returns:
+        True if duplicate found, False otherwise
+        
+    """
+    
+    distinct_list = []
+
+    for element in searched_list:
+        if element not in distinct_list:
+            distinct_list.append(element)
+        else:
+            return True
+
+    return False

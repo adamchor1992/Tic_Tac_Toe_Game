@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.messagebox
 from Tic_Tac_Toe_Logic import *
 
 
@@ -23,11 +24,11 @@ class TicTacToeGameGui(tk.Frame):
         winning_token = check_win(self.game_board)
 
         if winning_token:
-            congratulate_winner(winning_token)
+            self.congratulate_winner(winning_token)
             self.restart_game()
 
         if not get_empty_cells_coordinates(self.game_board):
-            print("Game over, no more valid moves")
+            tkinter.messagebox.showinfo("Game over, TIE", "No more valid moves")
             self.restart_game()
 
 
@@ -39,7 +40,7 @@ class TicTacToeGameGui(tk.Frame):
         winning_token = check_win(self.game_board)
 
         if winning_token:
-            congratulate_winner(winning_token)
+            self.congratulate_winner(winning_token)
             self.restart_game()
 
         if get_empty_cells_coordinates(self.game_board) == None:
@@ -110,7 +111,7 @@ class TicTacToeGameGui(tk.Frame):
 
 
     def restart_game(self):
-        restart_game(self.game_board)
+        reset_game_board(self.game_board)
 
         for cell_button in self.cell_buttons.values():
             cell_button.configure(state="normal")
@@ -118,9 +119,25 @@ class TicTacToeGameGui(tk.Frame):
         self.refresh_gui()
 
 
+    def congratulate_winner(self, token):
+        """Prints congratulations pointing out victorious token
+
+        Args:
+            token: String representing winning token
+
+        Returns:
+            None
+        """
+        #message
+        tkinter.messagebox.showinfo("Information", "TOKEN {} WINS".format(token))
+
+
 def main():
     root = tk.Tk()
+    root.title("Tic Tac Toe")
+
     game = TicTacToeGameGui(master=root)
+
     game.mainloop()
 
 
