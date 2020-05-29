@@ -116,12 +116,58 @@ def player_move(game_board):
 
     Returns:
         Tuple representing cell coordinates
-
     """
 
     cell_coordinates = player_get_next_move(game_board)
     mark_cell(game_board, X_TOKEN, cell_coordinates)
     return cell_coordinates
+
+
+def game_turn(game_board, players):
+    """Function managing whole round consisting of multiple game turns. Returns when turn is over
+    
+    Args:
+        game_board: Dictionary representing game board
+        players: Cycle object representing players taking turns
+
+    Returns:
+        Winning token if any player won, None otherwise
+    """
+
+    if next(players) == "Player":
+        player_move(game_board)
+        print("PLAYER MOVE")
+    else:
+        computer_move(game_board)
+        print("COMPUTER MOVE")
+    
+    print_game_board(game_board)
+    
+    winning_token = check_win(game_board)
+    
+    if winning_token:
+        congratulate_winner(winning_token)
+        return winning_token
+    else:
+        return None
+
+
+def game_round(game_board, players):
+    """Function managing whole round consisting of multiple game turns. Returns when round is over
+
+    Args:
+        game_board: Dictionary representing game board
+        players: Cycle object representing players taking turns
+
+    Returns:
+        None
+    """
+
+    while get_empty_cells_coordinates(game_board):
+        if game_turn(game_board, players) != None:
+            return
+    else:
+        print("TIE, No more valid moves available")
 
 
 def main():
@@ -132,23 +178,7 @@ def main():
     while True:
         print_game_board(game_board)
 
-        while get_empty_cells_coordinates(game_board): 
-            if next(players) == "Player":
-                player_move(game_board)
-                print("PLAYER MOVE")
-            else:
-                computer_move(game_board)
-                print("COMPUTER MOVE")
-
-            print_game_board(game_board)
-
-            winning_token = check_win(game_board)
-
-            if winning_token:
-                congratulate_winner(winning_token)
-                break
-        else:
-            print("Game over, no more valid moves")
+        game_round(game_board, players)
 
         user_input = input("Type anything to continue, Type quit to exit program: ")
 

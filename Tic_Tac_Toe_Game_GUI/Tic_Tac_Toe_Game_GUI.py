@@ -6,61 +6,58 @@ from Tic_Tac_Toe_Logic import *
 class TicTacToeGameGui(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
-        self.master = master
+        self._master = master
         self.pack()
 
-        self.game_board = create_new_game_board()
+        self._game_board = create_new_game_board()
 
-        self.create_widgets(self.game_board)
+        self.create_widgets()
+
+        self._players = itertools.cycle(["Player", "Computer"])
+
+        self._click_flag = tk.BooleanVar(value=False)
 
 
     def cell_clicked(self, cell_coordinates):
-        mark_cell(self.game_board, X_TOKEN, cell_coordinates)
-        
+        """Cell buttons callback
+
+        Args:
+            cell_coordinates: Coordinates related to which button/cell was clicked
+
+        Returns:
+            None
+        """
+
+        print("Cell clicked")
+
+        self._click_flag.set(True)
+
+        mark_cell(self._game_board, X_TOKEN, cell_coordinates)
         self.cell_buttons[cell_coordinates].configure(state="disabled")
-        
-        self.refresh_gui()
-
-        winning_token = check_win(self.game_board)
-
-        if winning_token:
-            self.congratulate_winner(winning_token)
-            self.restart_game()
-
-        if not get_empty_cells_coordinates(self.game_board):
-            tkinter.messagebox.showinfo("Game over, TIE", "No more valid moves")
-            self.restart_game()
 
 
-        computer_cell_coordinates = computer_move(self.game_board)
-        self.cell_buttons[computer_cell_coordinates].configure(state="disabled")
-        
-        self.refresh_gui()
-    
-        winning_token = check_win(self.game_board)
+    def create_widgets(self):
+        """Builds game graphical user interface
 
-        if winning_token:
-            self.congratulate_winner(winning_token)
-            self.restart_game()
+        Args:
+            None
 
-        if get_empty_cells_coordinates(self.game_board) == None:
-            print("Game over, no more valid moves")
-            self.restart_game()
+        Returns:
+            None
+        """
 
-
-    def create_widgets(self, game_board):
         button_width = 15
         button_height = 10
 
-        self.cell_1_1 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(1,1)], command = lambda: self.cell_clicked((1,1)))
-        self.cell_1_2 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(1,2)], command = lambda: self.cell_clicked((1,2)))
-        self.cell_1_3 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(1,3)], command = lambda: self.cell_clicked((1,3)))
-        self.cell_2_1 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(2,1)], command = lambda: self.cell_clicked((2,1)))
-        self.cell_2_2 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(2,2)], command = lambda: self.cell_clicked((2,2)))
-        self.cell_2_3 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(2,3)], command = lambda: self.cell_clicked((2,3)))
-        self.cell_3_1 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(3,1)], command = lambda: self.cell_clicked((3,1)))
-        self.cell_3_2 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(3,2)], command = lambda: self.cell_clicked((3,2)))
-        self.cell_3_3 = tk.Button(self, width=button_width, height=button_height, text=self.game_board[(3,3)], command = lambda: self.cell_clicked((3,3)))
+        self.cell_1_1 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(1,1)], command = lambda: self.cell_clicked((1,1)))
+        self.cell_1_2 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(1,2)], command = lambda: self.cell_clicked((1,2)))
+        self.cell_1_3 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(1,3)], command = lambda: self.cell_clicked((1,3)))
+        self.cell_2_1 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(2,1)], command = lambda: self.cell_clicked((2,1)))
+        self.cell_2_2 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(2,2)], command = lambda: self.cell_clicked((2,2)))
+        self.cell_2_3 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(2,3)], command = lambda: self.cell_clicked((2,3)))
+        self.cell_3_1 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(3,1)], command = lambda: self.cell_clicked((3,1)))
+        self.cell_3_2 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(3,2)], command = lambda: self.cell_clicked((3,2)))
+        self.cell_3_3 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(3,3)], command = lambda: self.cell_clicked((3,3)))
         
         self.cell_buttons = {}
 
@@ -94,24 +91,41 @@ class TicTacToeGameGui(tk.Frame):
         self.quit_button = tk.Button(   self, 
                                         text="Quit", 
                                         fg="red",
-                                        command=self.master.destroy)
+                                        command=self._master.destroy)
         self.quit_button.grid(row=4, column=0, columnspan=3)
 
 
     def refresh_gui(self):
-        self.cell_1_1.configure(text=self.game_board[(1,1)])
-        self.cell_1_2.configure(text=self.game_board[(1,2)])
-        self.cell_1_3.configure(text=self.game_board[(1,3)])
-        self.cell_2_1.configure(text=self.game_board[(2,1)])
-        self.cell_2_2.configure(text=self.game_board[(2,2)])
-        self.cell_2_3.configure(text=self.game_board[(2,3)])
-        self.cell_3_1.configure(text=self.game_board[(3,1)])
-        self.cell_3_2.configure(text=self.game_board[(3,2)])
-        self.cell_3_3.configure(text=self.game_board[(3,3)])
+        """Refreshes graphical interface by setting each button text according to game board state
+        
+        Args:
+            None
+
+        Returns:
+            None
+        """
+
+        self.cell_1_1.configure(text=self._game_board[(1,1)])
+        self.cell_1_2.configure(text=self._game_board[(1,2)])
+        self.cell_1_3.configure(text=self._game_board[(1,3)])
+        self.cell_2_1.configure(text=self._game_board[(2,1)])
+        self.cell_2_2.configure(text=self._game_board[(2,2)])
+        self.cell_2_3.configure(text=self._game_board[(2,3)])
+        self.cell_3_1.configure(text=self._game_board[(3,1)])
+        self.cell_3_2.configure(text=self._game_board[(3,2)])
+        self.cell_3_3.configure(text=self._game_board[(3,3)])
 
 
     def restart_game(self):
-        reset_game_board(self.game_board)
+        """Restarts game which effectively means reseting game board and activating again all cells
+        
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        reset_game_board(self._game_board)
 
         for cell_button in self.cell_buttons.values():
             cell_button.configure(state="normal")
@@ -128,8 +142,52 @@ class TicTacToeGameGui(tk.Frame):
         Returns:
             None
         """
-        #message
+
         tkinter.messagebox.showinfo("Information", "TOKEN {} WINS".format(token))
+
+
+    def game_round(self):
+        """Method managing whole round consisting of multiple game turns. Returns when round is over
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        while get_empty_cells_coordinates(self._game_board):
+            if self.game_turn() != None:
+                return
+        else:
+            tkinter.messagebox.showinfo("TIE", "No more valid moves")
+
+
+    def game_turn(self):
+        """Method managing whole round consisting of multiple game turns. Returns when turn is over
+    
+        Args:
+            None
+
+        Returns:
+            None
+        """
+        if next(self._players) == "Player":
+            self._master.wait_variable(self._click_flag)
+            print("PLAYER MOVE")
+        else:
+            computer_cell_coordinates = computer_move(self._game_board)
+            self.cell_buttons[computer_cell_coordinates].configure(state="disabled")
+            print("COMPUTER MOVE")
+    
+        self.refresh_gui()
+
+        winning_token = check_win(self._game_board)
+    
+        if winning_token:
+            self.congratulate_winner(winning_token)
+            return winning_token
+        else:
+            return None
 
 
 def main():
@@ -138,8 +196,10 @@ def main():
 
     game = TicTacToeGameGui(master=root)
 
-    game.mainloop()
-
+    while True:
+        game.game_round()
+        game.restart_game()
+    
 
 if __name__ == "__main__":
     main()
