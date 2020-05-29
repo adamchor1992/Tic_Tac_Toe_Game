@@ -134,52 +134,8 @@ def computer_get_next_move(game_board):
 
     Returns:
         Cell coordinates of next move
+
     """
-
-    def check_win_possible_in_next_move(game_board):
-        """Checks if win in next move is possible, if so - choose this move"""
-        for cell_coordinates in get_empty_cells_coordinates(game_board):
-            game_board_copy = game_board.copy()
-            mark_cell(game_board_copy, O_TOKEN, cell_coordinates)
-
-            if check_win(game_board_copy) == O_TOKEN:
-                return cell_coordinates
-
-        return None
-
-
-    def check_lose_possible_in_next_move(game_board):
-        """Checks if lose in next move is possible, if so - block this move"""
-        for cell_coordinates in get_empty_cells_coordinates(game_board):
-            game_board_copy = game_board.copy()
-            mark_cell(game_board_copy, X_TOKEN, cell_coordinates)
-    
-            if check_win(game_board_copy) == X_TOKEN:
-                return cell_coordinates
-
-        return None
-
-
-    def check_next_best_move(game_board):
-        """Checks for best move and returns it"""
-
-        # First select middle cell, then corners and then other cells. It is crucial that this list 
-        # contains all possible cells coordinates and it must not contain duplicates
-        move_priorities = [(2,2), (1,1), (1,3), (3,1), (3,3), (2,1), (1,2), (3,2), (2,3)]
-
-        if search_for_duplicates(move_priorities) == True:
-            raise ValueError("Duplicates not allowed")
-
-        assert len(move_priorities) == CELL_COUNT, "List of move priorities must contain all possible cells coordinates, no more and no less"
-
-        empty_cells_coordinates = get_empty_cells_coordinates(game_board)
-
-        for cell_coordinates in move_priorities:
-            if cell_coordinates in empty_cells_coordinates:
-                return cell_coordinates
-
-        return None
-
 
     cell_coordinates = check_win_possible_in_next_move(game_board)
     
@@ -200,6 +156,77 @@ def computer_get_next_move(game_board):
                 return cell_coordinates
             else:
                 assert False, print("================= NO MOVE CHOSEN - CRITICAL ERROR =================")
+
+
+def check_win_possible_in_next_move(game_board):
+    """Check if win in next move is possible, if so - choose this move
+
+    Args:
+        game_board: Dictionary representing game board
+
+    Returns:
+        Cell coordinates of next move
+
+    """
+
+    for cell_coordinates in get_empty_cells_coordinates(game_board):
+        game_board_copy = game_board.copy()
+        mark_cell(game_board_copy, O_TOKEN, cell_coordinates)
+
+        if check_win(game_board_copy) == O_TOKEN:
+            return cell_coordinates
+
+    return None
+
+
+def check_lose_possible_in_next_move(game_board):
+    """Check if lose in next move is possible, if so - block this move
+
+    Args:
+        game_board: Dictionary representing game board
+
+    Returns:
+        Cell coordinates of next move
+
+    """
+
+    for cell_coordinates in get_empty_cells_coordinates(game_board):
+        game_board_copy = game_board.copy()
+        mark_cell(game_board_copy, X_TOKEN, cell_coordinates)
+    
+        if check_win(game_board_copy) == X_TOKEN:
+            return cell_coordinates
+
+    return None
+
+
+def check_next_best_move(game_board):
+    """Check for best move and choose it
+
+    Args:
+        game_board: Dictionary representing game board
+
+    Returns:
+        Cell coordinates of next move
+
+    """
+
+    # First select middle cell, then corners and then other cells. It is crucial that this list 
+    # contains all possible cells coordinates and it must not contain duplicates
+    move_priorities = [(2,2), (1,1), (1,3), (3,1), (3,3), (2,1), (1,2), (3,2), (2,3)]
+
+    if search_for_duplicates(move_priorities) == True:
+        raise ValueError("Duplicates not allowed")
+
+    assert len(move_priorities) == CELL_COUNT, "List of move priorities must contain all possible cells coordinates, no more and no less"
+
+    empty_cells_coordinates = get_empty_cells_coordinates(game_board)
+
+    for cell_coordinates in move_priorities:
+        if cell_coordinates in empty_cells_coordinates:
+            return cell_coordinates
+
+    return None
 
 
 def search_for_duplicates(searched_list):

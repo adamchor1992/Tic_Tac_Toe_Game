@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter.messagebox
-from Tic_Tac_Toe_Logic import *
+from Tic_Tac_Toe_Common_Logic import *
 
 
 class TicTacToeGameGui(tk.Frame):

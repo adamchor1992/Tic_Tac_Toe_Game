@@ -9,7 +9,7 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tic_Tac_Toe_Tests", "Tic_Ta
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tic_Tac_Toe_Game_GUI", "Tic_Tac_Toe_Game_GUI\Tic_Tac_Toe_Game_GUI.pyproj", "{408BB481-2054-4ABE-A268-E062B843B84D}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tic_Tac_Toe_Logic", "Tic_Tac_Toe_Logic\Tic_Tac_Toe_Logic.pyproj", "{BB50EA5C-5B19-40D3-BD84-A7737AC0D890}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Tic_Tac_Toe_Common_Logic", "Tic_Tac_Toe_Logic\Tic_Tac_Toe_Common_Logic.pyproj", "{BB50EA5C-5B19-40D3-BD84-A7737AC0D890}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

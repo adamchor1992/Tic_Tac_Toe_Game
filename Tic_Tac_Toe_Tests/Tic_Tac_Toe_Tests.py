@@ -1,5 +1,5 @@
 import unittest
-from Tic_Tac_Toe_Logic import *
+from Tic_Tac_Toe_Common_Logic import *
 
 
 class TicTacToeTests(unittest.TestCase):
