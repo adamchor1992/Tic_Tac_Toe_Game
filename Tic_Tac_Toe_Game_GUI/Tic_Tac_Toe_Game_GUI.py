@@ -3,10 +3,11 @@ import tkinter.messagebox
 from Tic_Tac_Toe_Common_Logic import *
 import PIL.Image
 import PIL.ImageTk
-#from PIL import ImageTk ,Image
+from functools import partial
 
-ROW_COUNT = 3
-COLUMN_COUNT = 3
+
+ROW_COUNT = 5
+COLUMN_COUNT = 5
 
 
 class TicTacToeGameGui(tk.Frame):
@@ -34,7 +35,7 @@ class TicTacToeGameGui(tk.Frame):
             None
         """
 
-        print("Cell clicked")
+        print("Cell clicked: {}".format(cell_coordinates))
 
         self._click_flag.set(True)
 
@@ -63,51 +64,30 @@ class TicTacToeGameGui(tk.Frame):
         self.x_cell_image = PIL.ImageTk.PhotoImage(PIL.Image.open(path_x_cell_image))
         self.o_cell_image = PIL.ImageTk.PhotoImage(PIL.Image.open(path_o_cell_image))
 
-        self.cell_1_1 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((1,1)))
-        self.cell_1_2 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((1,2)))
-        self.cell_1_3 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((1,3)))
-        self.cell_2_1 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((2,1)))
-        self.cell_2_2 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((2,2)))
-        self.cell_2_3 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((2,3)))
-        self.cell_3_1 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((3,1)))
-        self.cell_3_2 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((3,2)))
-        self.cell_3_3 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((3,3)))
-        
         self.cell_buttons = {}
 
-        self.cell_buttons[(1,1)] = self.cell_1_1
-        self.cell_buttons[(1,2)] = self.cell_1_2
-        self.cell_buttons[(1,3)] = self.cell_1_3
-        self.cell_buttons[(2,1)] = self.cell_2_1
-        self.cell_buttons[(2,2)] = self.cell_2_2
-        self.cell_buttons[(2,3)] = self.cell_2_3
-        self.cell_buttons[(3,1)] = self.cell_3_1
-        self.cell_buttons[(3,2)] = self.cell_3_2
-        self.cell_buttons[(3,3)] = self.cell_3_3
+        for cell_coordinates in self._game_board:
+            self.cell_buttons[cell_coordinates] = tk.Button(self, 
+                                                            width=button_width, 
+                                                            height=button_height, 
+                                                            image = self.empty_cell_image, 
+                                                            command = partial(self.cell_clicked, cell_coordinates))
 
-        self.cell_1_1.grid(row=0,column=0)
-        self.cell_1_2.grid(row=0,column=1)
-        self.cell_1_3.grid(row=0,column=2)
-        self.cell_2_1.grid(row=1,column=0)
-        self.cell_2_2.grid(row=1,column=1)
-        self.cell_2_3.grid(row=1,column=2)
-        self.cell_3_1.grid(row=2,column=0)
-        self.cell_3_2.grid(row=2,column=1)
-        self.cell_3_3.grid(row=2,column=2)
+            self.cell_buttons[cell_coordinates].grid(row=cell_coordinates[0]-1, column=cell_coordinates[1]-1)
 
         self.restart_button = tk.Button(self, 
                                         text="Restart", 
                                         fg="black",
                                         command=self.restart_game)
 
-        self.restart_button.grid(row=3, column=0, columnspan=3)
+        self.restart_button.grid(row=ROW_COUNT, column=0, columnspan=COLUMN_COUNT)
 
         self.quit_button = tk.Button(self, 
                                      text="Quit", 
                                      fg="red",
                                      command=self._master.destroy)
         
-        self.quit_button.grid(row=4, column=0, columnspan=3)
+        self.quit_button.grid(row=ROW_COUNT+1, column=0, columnspan=COLUMN_COUNT)
 
 
     def refresh_gui(self):
