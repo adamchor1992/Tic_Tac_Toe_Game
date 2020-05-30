@@ -1,7 +1,17 @@
 from Tic_Tac_Toe_Common_Logic import *
 
-ROW_COUNT = 3
-COLUMN_COUNT = 3
+
+ROW_COUNT = 5
+COLUMN_COUNT = 5
+
+game_board_size = ROW_COUNT * COLUMN_COUNT
+
+if game_board_size == 9:
+    check_win = check_win_3x3
+elif game_board_size == 25:
+    check_win = check_win_5x5
+else:
+    assert false, "Invalid game board"
 
 
 class Game():
@@ -124,7 +134,7 @@ class Game():
     
         self.display_game_board()
     
-        winning_token = check_win_3x3(self._game_board)
+        winning_token = check_win(self._game_board)
     
         if winning_token:
             self.congratulate_winner(winning_token)

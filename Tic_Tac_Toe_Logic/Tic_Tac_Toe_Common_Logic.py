@@ -260,11 +260,20 @@ def check_win_possible_in_next_move(game_board):
 
     """
 
+    game_board_size = len(game_board)
+
+    if game_board_size == 9:
+        check_win = check_win_3x3
+    elif game_board_size == 25:
+        check_win = check_win_5x5
+    else:
+        assert false, "Invalid game board size"
+
     for cell_coordinates in get_empty_cells_coordinates(game_board):
         game_board_copy = game_board.copy()
         mark_cell(game_board_copy, O_TOKEN, cell_coordinates)
 
-        if check_win_3x3(game_board_copy) == O_TOKEN:
+        if check_win(game_board_copy) == O_TOKEN:
             return cell_coordinates
 
     return None
@@ -281,11 +290,20 @@ def check_lose_possible_in_next_move(game_board):
 
     """
 
+    game_board_size = len(game_board)
+
+    if game_board_size == 9:
+        check_win = check_win_3x3
+    elif game_board_size == 25:
+        check_win = check_win_5x5
+    else:
+        assert false, "Invalid game board size"
+
     for cell_coordinates in get_empty_cells_coordinates(game_board):
         game_board_copy = game_board.copy()
         mark_cell(game_board_copy, X_TOKEN, cell_coordinates)
     
-        if check_win_3x3(game_board_copy) == X_TOKEN:
+        if check_win(game_board_copy) == X_TOKEN:
             return cell_coordinates
 
     return None
@@ -304,12 +322,26 @@ def check_next_best_move(game_board):
 
     # First select middle cell, then corners and then other cells. It is crucial that this list 
     # contains all possible cells coordinates and it must not contain duplicates
-    move_priorities = [(2,2), (1,1), (1,3), (3,1), (3,3), (2,1), (1,2), (3,2), (2,3)]
+    move_priorities_3x3 = [(2,2), (1,1), (1,3), (3,1), (3,3), (2,1), (1,2), (3,2), (2,3)]
+
+    move_priorities_5x5 = [(3,3), # 8 options
+                          (2,2), (2,4), (4,2), (4,4), (2,3), (3,2), (3,4), (4,3), # 6 options 
+                          (1,2), (1,4), (2,1), (2,5), (4,1), (4,5), (5,2), (5,4), # 4 options
+                          (1,1), (1,3), (1,5), (3,1), (3,5), (5,1), (5,3), (5,5),] # 3 options
+
+    game_board_size = len(game_board)
+
+    if game_board_size == 9:
+        move_priorities = move_priorities_3x3
+    elif game_board_size == 25:
+        move_priorities = move_priorities_5x5
+    else:
+        assert false, "Invalid game board size"
 
     if search_for_duplicates(move_priorities) == True:
         raise ValueError("Duplicates not allowed")
 
-    assert len(move_priorities) == 9, "List of move priorities must contain all possible cells coordinates, no more and no less"
+    assert len(move_priorities) == game_board_size, "List of move priorities must contain all possible cells coordinates, no more and no less"
 
     empty_cells_coordinates = get_empty_cells_coordinates(game_board)
 
