@@ -9,7 +9,7 @@ COLUMN_COUNT = 3
 CELL_COUNT = ROW_COUNT * COLUMN_COUNT
 
 
-def create_new_game_board():
+def create_game_board():
     """Creates new game board in form of tuple:string dictionary  {(x,y):TOKEN}
     
     Args: 
@@ -121,12 +121,12 @@ def computer_move(game_board):
 
     """
 
-    cell_coordinates = computer_get_next_move(game_board)
+    cell_coordinates = computer_calculate_next_move(game_board)
     mark_cell(game_board, O_TOKEN, cell_coordinates)
     return cell_coordinates
 
 
-def computer_get_next_move(game_board):
+def computer_calculate_next_move(game_board):
     """Figures out computer's next move
 
     Args:

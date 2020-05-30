@@ -3,7 +3,7 @@ from Tic_Tac_Toe_Common_Logic import *
 
 class Game():
     def __init__(self):
-        self._game_board = create_new_game_board()
+        self._game_board = create_game_board()
         self._players = itertools.cycle(["Player", "Computer"])
 
 

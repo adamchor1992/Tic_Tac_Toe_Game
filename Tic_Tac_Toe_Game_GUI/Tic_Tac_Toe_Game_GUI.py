@@ -9,7 +9,7 @@ class TicTacToeGameGui(tk.Frame):
         self._master = master
         self.pack()
 
-        self._game_board = create_new_game_board()
+        self._game_board = create_game_board()
 
         self.create_widgets()
 
@@ -83,15 +83,16 @@ class TicTacToeGameGui(tk.Frame):
 
         self.restart_button = tk.Button(self, 
                                         text="Restart", 
-                                        fg="red",
+                                        fg="black",
                                         command=self.restart_game)
 
         self.restart_button.grid(row=3, column=0, columnspan=3)
 
-        self.quit_button = tk.Button(   self, 
-                                        text="Quit", 
-                                        fg="red",
-                                        command=self._master.destroy)
+        self.quit_button = tk.Button(self, 
+                                     text="Quit", 
+                                     fg="red",
+                                     command=self._master.destroy)
+        
         self.quit_button.grid(row=4, column=0, columnspan=3)
 
 
