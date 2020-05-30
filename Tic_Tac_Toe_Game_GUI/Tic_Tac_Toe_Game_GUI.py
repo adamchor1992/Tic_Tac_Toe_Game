@@ -1,9 +1,12 @@
 import tkinter as tk
 import tkinter.messagebox
 from Tic_Tac_Toe_Common_Logic import *
+import PIL.Image
+import PIL.ImageTk
+#from PIL import ImageTk ,Image
 
-ROW_COUNT = 5
-COLUMN_COUNT = 5
+ROW_COUNT = 3
+COLUMN_COUNT = 3
 
 
 class TicTacToeGameGui(tk.Frame):
@@ -49,18 +52,26 @@ class TicTacToeGameGui(tk.Frame):
             None
         """
 
-        button_width = 15
-        button_height = 10
+        button_width = 100
+        button_height = 100
 
-        self.cell_1_1 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(1,1)], command = lambda: self.cell_clicked((1,1)))
-        self.cell_1_2 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(1,2)], command = lambda: self.cell_clicked((1,2)))
-        self.cell_1_3 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(1,3)], command = lambda: self.cell_clicked((1,3)))
-        self.cell_2_1 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(2,1)], command = lambda: self.cell_clicked((2,1)))
-        self.cell_2_2 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(2,2)], command = lambda: self.cell_clicked((2,2)))
-        self.cell_2_3 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(2,3)], command = lambda: self.cell_clicked((2,3)))
-        self.cell_3_1 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(3,1)], command = lambda: self.cell_clicked((3,1)))
-        self.cell_3_2 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(3,2)], command = lambda: self.cell_clicked((3,2)))
-        self.cell_3_3 = tk.Button(self, width=button_width, height=button_height, text=self._game_board[(3,3)], command = lambda: self.cell_clicked((3,3)))
+        path_empty_cell_image = "images/empty_cell.jpg"
+        path_x_cell_image = "images/x_cell.jpg"
+        path_o_cell_image = "images/o_cell.jpg"
+
+        self.empty_cell_image = PIL.ImageTk.PhotoImage(PIL.Image.open(path_empty_cell_image))
+        self.x_cell_image = PIL.ImageTk.PhotoImage(PIL.Image.open(path_x_cell_image))
+        self.o_cell_image = PIL.ImageTk.PhotoImage(PIL.Image.open(path_o_cell_image))
+
+        self.cell_1_1 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((1,1)))
+        self.cell_1_2 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((1,2)))
+        self.cell_1_3 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((1,3)))
+        self.cell_2_1 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((2,1)))
+        self.cell_2_2 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((2,2)))
+        self.cell_2_3 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((2,3)))
+        self.cell_3_1 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((3,1)))
+        self.cell_3_2 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((3,2)))
+        self.cell_3_3 = tk.Button(self, width=button_width, height=button_height, image = self.empty_cell_image, command = lambda: self.cell_clicked((3,3)))
         
         self.cell_buttons = {}
 
@@ -109,15 +120,13 @@ class TicTacToeGameGui(tk.Frame):
             None
         """
 
-        self.cell_1_1.configure(text=self._game_board[(1,1)])
-        self.cell_1_2.configure(text=self._game_board[(1,2)])
-        self.cell_1_3.configure(text=self._game_board[(1,3)])
-        self.cell_2_1.configure(text=self._game_board[(2,1)])
-        self.cell_2_2.configure(text=self._game_board[(2,2)])
-        self.cell_2_3.configure(text=self._game_board[(2,3)])
-        self.cell_3_1.configure(text=self._game_board[(3,1)])
-        self.cell_3_2.configure(text=self._game_board[(3,2)])
-        self.cell_3_3.configure(text=self._game_board[(3,3)])
+        for cell_coordinates in self.cell_buttons:
+            if self._game_board[cell_coordinates] == NULL_TOKEN:
+                self.cell_buttons[cell_coordinates].configure(image=self.empty_cell_image)
+            elif self._game_board[cell_coordinates] == X_TOKEN:
+                self.cell_buttons[cell_coordinates].configure(image=self.x_cell_image)
+            elif self._game_board[cell_coordinates] == O_TOKEN:
+                self.cell_buttons[cell_coordinates].configure(image=self.o_cell_image)
 
 
     def restart_game(self):
