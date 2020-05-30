@@ -1,9 +1,12 @@
 from Tic_Tac_Toe_Common_Logic import *
 
+ROW_COUNT = 3
+COLUMN_COUNT = 3
+
 
 class Game():
     def __init__(self):
-        self._game_board = create_game_board()
+        self._game_board = create_game_board(ROW_COUNT, COLUMN_COUNT)
         self._players = itertools.cycle(["Player", "Computer"])
 
 
@@ -121,7 +124,7 @@ class Game():
     
         self.display_game_board()
     
-        winning_token = check_win(self._game_board)
+        winning_token = check_win_3x3(self._game_board)
     
         if winning_token:
             self.congratulate_winner(winning_token)
@@ -171,7 +174,7 @@ class Game():
             if row == ROW_COUNT:
                 break
             else:
-                print("-------------------------------------------------")
+                print(COLUMN_COUNT * "----------------")
 
         print()
 

@@ -2,6 +2,9 @@ import tkinter as tk
 import tkinter.messagebox
 from Tic_Tac_Toe_Common_Logic import *
 
+ROW_COUNT = 5
+COLUMN_COUNT = 5
+
 
 class TicTacToeGameGui(tk.Frame):
     def __init__(self, master=None):
@@ -9,7 +12,7 @@ class TicTacToeGameGui(tk.Frame):
         self._master = master
         self.pack()
 
-        self._game_board = create_game_board()
+        self._game_board = create_game_board(ROW_COUNT, COLUMN_COUNT)
 
         self.create_widgets()
 
@@ -182,7 +185,7 @@ class TicTacToeGameGui(tk.Frame):
     
         self.refresh_gui()
 
-        winning_token = check_win(self._game_board)
+        winning_token = check_win_3x3(self._game_board)
     
         if winning_token:
             self.congratulate_winner(winning_token)

@@ -1,14 +1,17 @@
 import unittest
 from Tic_Tac_Toe_Common_Logic import *
 
+ROW_COUNT = 3
+COLUMN_COUNT = 3
+
 
 class GameBoardTests(unittest.TestCase):
     def setUp(self):
-        self.game_board = create_game_board()
+        self.game_board = create_game_board(ROW_COUNT, COLUMN_COUNT)
 
 
     def test_function_create_game_board(self):
-        self.assertEqual(len(self.game_board), CELL_COUNT)
+        self.assertEqual(len(self.game_board), 9)
 
         for cell_coordinates in self.game_board:
             self.assertEqual(self.game_board[cell_coordinates], NULL_TOKEN)
@@ -33,7 +36,7 @@ class GameBoardTests(unittest.TestCase):
 
 
     def test_function_get_empty_cells_coordinates_all_cells_empty(self):
-        self.assertEqual(len(get_empty_cells_coordinates(self.game_board)), CELL_COUNT)
+        self.assertEqual(len(get_empty_cells_coordinates(self.game_board)), 9)
 
         self.assertEqual(self.game_board[(1,1)], NULL_TOKEN)
         self.assertEqual(self.game_board[(1,2)], NULL_TOKEN)
@@ -80,31 +83,31 @@ class GameBoardTests(unittest.TestCase):
 
 class WinningPatternTests(unittest.TestCase):
     def setUp(self):
-        self.game_board = create_game_board()
+        self.game_board = create_game_board(ROW_COUNT, COLUMN_COUNT)
 
 
-    def test_function_check_win_X_token(self):
+    def test_function_check_win_3x3_X_token(self):
         mark_cell(self.game_board, X_TOKEN, (1,1))
         mark_cell(self.game_board, X_TOKEN, (2,2))
         mark_cell(self.game_board, X_TOKEN, (3,3))
 
-        self.assertEqual(check_win(self.game_board), X_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), X_TOKEN)
  
 
-    def test_function_check_win_O_token(self):
+    def test_function_check_win_3x3_O_token(self):
         mark_cell(self.game_board, O_TOKEN, (1,3))
         mark_cell(self.game_board, O_TOKEN, (2,2))
         mark_cell(self.game_board, O_TOKEN, (3,1))
 
-        self.assertEqual(check_win(self.game_board), O_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
         
 
-    def test_function_check_win_all_cases(self):
+    def test_function_check_win_3x3_all_cases(self):
         mark_cell(self.game_board, O_TOKEN, (1,1))
         mark_cell(self.game_board, O_TOKEN, (1,2))
         mark_cell(self.game_board, O_TOKEN, (1,3))
 
-        self.assertEqual(check_win(self.game_board), O_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
 
         reset_game_board(self.game_board)
         
@@ -112,7 +115,7 @@ class WinningPatternTests(unittest.TestCase):
         mark_cell(self.game_board, O_TOKEN, (2,2))
         mark_cell(self.game_board, O_TOKEN, (2,3))
 
-        self.assertEqual(check_win(self.game_board), O_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
 
         reset_game_board(self.game_board)
 
@@ -120,7 +123,7 @@ class WinningPatternTests(unittest.TestCase):
         mark_cell(self.game_board, O_TOKEN, (3,2))
         mark_cell(self.game_board, O_TOKEN, (3,3))
 
-        self.assertEqual(check_win(self.game_board), O_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
 
         reset_game_board(self.game_board)
 
@@ -128,7 +131,7 @@ class WinningPatternTests(unittest.TestCase):
         mark_cell(self.game_board, O_TOKEN, (2,1))
         mark_cell(self.game_board, O_TOKEN, (3,1))
 
-        self.assertEqual(check_win(self.game_board), O_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
 
         reset_game_board(self.game_board)
 
@@ -136,7 +139,7 @@ class WinningPatternTests(unittest.TestCase):
         mark_cell(self.game_board, O_TOKEN, (2,2))
         mark_cell(self.game_board, O_TOKEN, (3,2))
 
-        self.assertEqual(check_win(self.game_board), O_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
 
         reset_game_board(self.game_board)
 
@@ -144,7 +147,7 @@ class WinningPatternTests(unittest.TestCase):
         mark_cell(self.game_board, O_TOKEN, (2,3))
         mark_cell(self.game_board, O_TOKEN, (3,3))
 
-        self.assertEqual(check_win(self.game_board), O_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
 
         reset_game_board(self.game_board)
 
@@ -152,7 +155,7 @@ class WinningPatternTests(unittest.TestCase):
         mark_cell(self.game_board, O_TOKEN, (2,2))
         mark_cell(self.game_board, O_TOKEN, (3,3))
 
-        self.assertEqual(check_win(self.game_board), O_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
 
         reset_game_board(self.game_board)
 
@@ -160,12 +163,12 @@ class WinningPatternTests(unittest.TestCase):
         mark_cell(self.game_board, O_TOKEN, (2,2))
         mark_cell(self.game_board, O_TOKEN, (3,1))
 
-        self.assertEqual(check_win(self.game_board), O_TOKEN)
+        self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
 
 
 class ComputerAiTests(unittest.TestCase):
     def setUp(self):
-        self.game_board = create_game_board()
+        self.game_board = create_game_board(ROW_COUNT, COLUMN_COUNT)
 
 
     def test_function_computer_move_win_in_next_move_case1(self):

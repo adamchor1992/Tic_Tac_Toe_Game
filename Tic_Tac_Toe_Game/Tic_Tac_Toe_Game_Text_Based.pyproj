@@ -5,7 +5,7 @@
     <ProjectGuid>c257d105-f85b-4221-89f2-e8eb1b98c2b9</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Tic_Tac_Toe_Game_Text_Based.py</StartupFile>
+    <StartupFile>Tic_Tac_Toe_Game_Text_Based_5x5.py</StartupFile>
     <SearchPath>..\Tic_Tac_Toe_Logic</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -21,7 +21,10 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Tic_Tac_Toe_Game_Text_Based.py" />
+    <Compile Include="Tic_Tac_Toe_Game_Text_Based_5x5.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Tic_Tac_Toe_Game_Text_Based_3x3.py" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tic_Tac_Toe_Logic\Tic_Tac_Toe_Logic.pyproj">

@@ -3,13 +3,13 @@ import itertools
 
 X_TOKEN = "X" # PLAYER TOKEN
 O_TOKEN = "O" # COMPUTER TOKEN
-NULL_TOKEN = ""
+NULL_TOKEN = " "
 ROW_COUNT = 3
 COLUMN_COUNT = 3
 CELL_COUNT = ROW_COUNT * COLUMN_COUNT
 
 
-def create_game_board():
+def create_game_board(row_count, column_count):
     """Creates new game board in form of tuple:string dictionary  {(x,y):TOKEN}
     
     Args: 
@@ -20,8 +20,8 @@ def create_game_board():
     """
 
     game_board = {}
-    for row in range(1, ROW_COUNT + 1):
-        for column in range(1, COLUMN_COUNT + 1):
+    for row in range(1, row_count + 1):
+        for column in range(1, column_count + 1):
             game_board[(row, column)] = NULL_TOKEN
     return game_board
 
@@ -77,8 +77,8 @@ def mark_cell(game_board, token, cell_coordinates):
         raise ValueError("Cell coordinates do not exist") 
 
 
-def check_win(game_board):
-    """Checks if pattern of tokens on a game board matches any of the winning patterns
+def check_win_3x3(game_board):
+    """Checks if pattern of tokens on a 3x3 game board matches any of the winning patterns
 
     Args:
         game_board: Dictionary representing game board
@@ -105,6 +105,97 @@ def check_win(game_board):
         elif game_board[(1,1)] == token and game_board[(2,2)] == token and game_board[(3,3)] == token:
             return token
         elif game_board[(1,3)] == token and game_board[(2,2)] == token and game_board[(3,1)] == token:
+            return token
+
+    return None
+
+
+def check_win_5x5(game_board):
+    """Checks if pattern of tokens on a 5x5 game board matches any of the winning patterns
+
+    Args:
+        game_board: Dictionary representing game board
+
+    Returns:
+        String representing winning token, None otherwise
+    """
+
+    tokens = (X_TOKEN, O_TOKEN)
+
+    for token in tokens:
+        # horizontal rows
+        if game_board[(1,1)] == token and game_board[(1,2)] == token and game_board[(1,3)] == token and game_board[(1,4)] == token:
+            return token
+        elif game_board[(1,2)] == token and game_board[(1,3)] == token and game_board[(1,4)] == token and game_board[(1,5)] == token:
+            return token
+        
+        elif game_board[(2,1)] == token and game_board[2,2] == token and game_board[2,3] == token and game_board[(2,4)] == token:
+            return token
+        elif game_board[2,2] == token and game_board[2,3] == token and game_board[(2,4)] == token and game_board[(2,5)] == token:
+            return token
+        
+        elif game_board[(3,1)] == token and game_board[3,2] == token and game_board[3,3] == token and game_board[(3,4)] == token:
+            return token
+        elif game_board[3,2] == token and game_board[3,3] == token and game_board[(3,4)] == token and game_board[(3,5)] == token:
+            return token
+        
+        elif game_board[(4,1)] == token and game_board[4,2] == token and game_board[4,3] == token and game_board[(4,4)] == token:
+            return token
+        elif game_board[4,2] == token and game_board[4,3] == token and game_board[(4,4)] == token and game_board[(4,5)] == token:
+            return token
+        
+        elif game_board[(5,1)] == token and game_board[5,2] == token and game_board[5,3] == token and game_board[(5,4)] == token:
+            return token
+        elif game_board[5,2] == token and game_board[5,3] == token and game_board[(5,4)] == token and game_board[(5,5)] == token:
+            return token
+
+        # vertical rows
+        elif game_board[(1,1)] == token and game_board[(2,1)] == token and game_board[(3,1)] == token and game_board[(4,1)] == token:
+            return token
+        elif game_board[(2,1)] == token and game_board[(3,1)] == token and game_board[(4,1)] == token and game_board[(5,1)] == token:
+            return token
+        
+        elif game_board[(1,2)] == token and game_board[(2,2)] == token and game_board[(3,2)] == token and game_board[(4,2)] == token:
+            return token
+        elif game_board[(2,2)] == token and game_board[(3,2)] == token and game_board[(4,2)] == token and game_board[(5,2)] == token:
+            return token
+        
+        elif game_board[(1,3)] == token and game_board[(2,3)] == token and game_board[(3,3)] == token and game_board[(4,3)] == token:
+            return token
+        elif game_board[(2,3)] == token and game_board[(3,3)] == token and game_board[(4,3)] == token and game_board[(5,3)] == token:
+            return token
+
+        elif game_board[(1,4)] == token and game_board[(2,4)] == token and game_board[(3,4)] == token and game_board[(4,4)] == token:
+            return token
+        elif game_board[(2,4)] == token and game_board[(3,4)] == token and game_board[(4,4)] == token and game_board[(5,4)] == token:
+            return token
+        
+        elif game_board[(1,5)] == token and game_board[(2,5)] == token and game_board[(3,5)] == token and game_board[(4,5)] == token:
+            return token
+        elif game_board[(2,5)] == token and game_board[(3,5)] == token and game_board[(4,5)] == token and game_board[(5,5)] == token:
+            return token
+
+        # diagonal rows
+        elif game_board[(1,1)] == token and game_board[(2,2)] == token and game_board[(3,3)] == token and game_board[(4,4)] == token:
+            return token
+        elif game_board[(2,2)] == token and game_board[(3,3)] == token and game_board[(4,4)] == token and game_board[(5,5)] == token:
+            return token
+
+        elif game_board[(1,5)] == token and game_board[(2,4)] == token and game_board[(3,3)] == token and game_board[(4,2)] == token:
+            return token
+        elif game_board[(2,4)] == token and game_board[(3,3)] == token and game_board[(4,2)] == token and game_board[(5,1)] == token:
+            return token
+
+        elif game_board[(2,1)] == token and game_board[(3,2)] == token and game_board[(4,3)] == token and game_board[(5,4)] == token:
+            return token
+
+        elif game_board[(1,2)] == token and game_board[(2,3)] == token and game_board[(3,4)] == token and game_board[(4,5)] == token:
+            return token
+
+        elif game_board[(1,4)] == token and game_board[(2,3)] == token and game_board[(3,2)] == token and game_board[(4,1)] == token:
+            return token
+
+        elif game_board[(2,5)] == token and game_board[(3,4)] == token and game_board[(4,3)] == token and game_board[(5,2)] == token:
             return token
 
     return None
@@ -173,7 +264,7 @@ def check_win_possible_in_next_move(game_board):
         game_board_copy = game_board.copy()
         mark_cell(game_board_copy, O_TOKEN, cell_coordinates)
 
-        if check_win(game_board_copy) == O_TOKEN:
+        if check_win_3x3(game_board_copy) == O_TOKEN:
             return cell_coordinates
 
     return None
@@ -194,7 +285,7 @@ def check_lose_possible_in_next_move(game_board):
         game_board_copy = game_board.copy()
         mark_cell(game_board_copy, X_TOKEN, cell_coordinates)
     
-        if check_win(game_board_copy) == X_TOKEN:
+        if check_win_3x3(game_board_copy) == X_TOKEN:
             return cell_coordinates
 
     return None
@@ -218,7 +309,7 @@ def check_next_best_move(game_board):
     if search_for_duplicates(move_priorities) == True:
         raise ValueError("Duplicates not allowed")
 
-    assert len(move_priorities) == CELL_COUNT, "List of move priorities must contain all possible cells coordinates, no more and no less"
+    assert len(move_priorities) == 9, "List of move priorities must contain all possible cells coordinates, no more and no less"
 
     empty_cells_coordinates = get_empty_cells_coordinates(game_board)
 
