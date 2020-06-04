@@ -27,14 +27,14 @@ class TicTacToeGameGui(tk.Frame):
 
         self._game_board = create_game_board(ROW_COUNT, COLUMN_COUNT)
 
-        self.create_widgets()
+        self._create_widgets()
 
         self._players = itertools.cycle(["Player", "Computer"])
 
-        self._click_flag = tk.BooleanVar(value=False)
+        self._empty_cell_click_flag = tk.BooleanVar(value=False)
 
 
-    def cell_clicked(self, cell_coordinates):
+    def _cell_clicked(self, cell_coordinates):
         """Cell buttons callback
 
         Args:
@@ -46,13 +46,12 @@ class TicTacToeGameGui(tk.Frame):
 
         print("Cell clicked: {}".format(cell_coordinates))
 
-        self._click_flag.set(True)
+        if cell_coordinates in get_empty_cells_coordinates(self._game_board):
+            self._empty_cell_click_flag.set(True)
+            mark_cell(self._game_board, X_TOKEN, cell_coordinates)
 
-        mark_cell(self._game_board, X_TOKEN, cell_coordinates)
-        self.cell_buttons[cell_coordinates].configure(state="disabled")
 
-
-    def create_widgets(self):
+    def _create_widgets(self):
         """Builds game graphical user interface
 
         Args:
@@ -77,10 +76,11 @@ class TicTacToeGameGui(tk.Frame):
 
         for cell_coordinates in self._game_board:
             self.cell_buttons[cell_coordinates] = tk.Button(self, 
-                                                            width=button_width, 
-                                                            height=button_height, 
+                                                            width = button_width,
+                                                            height = button_height,
                                                             image = self.empty_cell_image, 
-                                                            command = partial(self.cell_clicked, cell_coordinates))
+                                                            borderwidth = 0,
+                                                            command = partial(self._cell_clicked, cell_coordinates))
 
             self.cell_buttons[cell_coordinates].grid(row=cell_coordinates[0]-1, column=cell_coordinates[1]-1)
 
@@ -99,7 +99,7 @@ class TicTacToeGameGui(tk.Frame):
         self.quit_button.grid(row=ROW_COUNT+1, column=0, columnspan=COLUMN_COUNT)
 
 
-    def refresh_gui(self):
+    def _refresh_gui(self):
         """Refreshes graphical interface by setting each button text according to game board state
         
         Args:
@@ -132,10 +132,10 @@ class TicTacToeGameGui(tk.Frame):
         for cell_button in self.cell_buttons.values():
             cell_button.configure(state="normal")
 
-        self.refresh_gui()
+        self._refresh_gui()
 
 
-    def congratulate_winner(self, token):
+    def _congratulate_winner(self, token):
         """Prints congratulations pointing out victorious token
 
         Args:
@@ -158,13 +158,13 @@ class TicTacToeGameGui(tk.Frame):
             None
         """
         while get_empty_cells_coordinates(self._game_board):
-            if self.game_turn() != None:
+            if self._game_turn() != None:
                 return
         else:
             tkinter.messagebox.showinfo("TIE", "No more valid moves")
 
 
-    def game_turn(self):
+    def _game_turn(self):
         """Method managing whole round consisting of multiple game turns. Returns when turn is over
     
         Args:
@@ -174,19 +174,19 @@ class TicTacToeGameGui(tk.Frame):
             None
         """
         if next(self._players) == "Player":
-            self._master.wait_variable(self._click_flag)
+            self._master.wait_variable(self._empty_cell_click_flag)
             print("PLAYER MOVE")
         else:
             computer_cell_coordinates = computer_move(self._game_board)
-            self.cell_buttons[computer_cell_coordinates].configure(state="disabled")
+
             print("COMPUTER MOVE")
     
-        self.refresh_gui()
+        self._refresh_gui()
 
         winning_token = check_win(self._game_board)
     
         if winning_token:
-            self.congratulate_winner(winning_token)
+            self._congratulate_winner(winning_token)
             return winning_token
         else:
             return None

@@ -20,7 +20,7 @@ class Game():
         self._players = itertools.cycle(["Player", "Computer"])
 
 
-    def player_move(self):
+    def _player_move(self):
         """Processes player move based on the current game board state
         
         Args:
@@ -30,13 +30,13 @@ class Game():
             Tuple representing cell coordinates
         """
 
-        cell_coordinates = self.player_get_next_move()
+        cell_coordinates = self._player_get_next_move()
         mark_cell(self._game_board, X_TOKEN, cell_coordinates)
 
         return cell_coordinates
 
 
-    def congratulate_winner(self, token):
+    def _congratulate_winner(self, token):
         """Prints congratulations pointing out victorious token
 
         Args:
@@ -49,7 +49,7 @@ class Game():
         print("====================================================== TOKEN {} WINS ======================================================".format(token))
 
 
-    def process_and_validate_coordinates(self, input_coordinates):
+    def _process_and_validate_coordinates(self, input_coordinates):
         """Converts input string to 2-element tuple of coordinates if the string is valid
         
         Args:
@@ -87,7 +87,7 @@ class Game():
         return (coordinate_x, coordinate_y)
 
 
-    def player_get_next_move(self):
+    def _player_get_next_move(self):
         """Gets input coordinates from player, processes it and checks if the cell is available. 
             It does not return until proper coordinates have been typed
 
@@ -103,7 +103,7 @@ class Game():
         
             print("")
 
-            cell_coordinates = self.process_and_validate_coordinates(input_coordinates)
+            cell_coordinates = self._process_and_validate_coordinates(input_coordinates)
 
             if cell_coordinates == None:
                 continue
@@ -115,7 +115,7 @@ class Game():
                     continue
 
 
-    def game_turn(self):
+    def _game_turn(self):
         """Function managing whole round consisting of multiple game turns. Returns when turn is over
     
         Args:
@@ -126,7 +126,7 @@ class Game():
         """
 
         if next(self._players) == "Player":
-            self.player_move()
+            self._player_move()
             print("PLAYER MOVE")
         else:
             computer_move(self._game_board)
@@ -137,7 +137,7 @@ class Game():
         winning_token = check_win(self._game_board)
     
         if winning_token:
-            self.congratulate_winner(winning_token)
+            self._congratulate_winner(winning_token)
             return winning_token
         else:
             return None
@@ -154,7 +154,7 @@ class Game():
         """
 
         while get_empty_cells_coordinates(self._game_board):
-            if self.game_turn() != None:
+            if self._game_turn() != None:
                 return
         else:
             print("TIE, No more valid moves available")
