@@ -81,12 +81,14 @@ class GameBoardTests(unittest.TestCase):
         self.assertEqual(self.game_board[(3,2)], NULL_TOKEN)
 
 
-class WinningPatternTests(unittest.TestCase):
+class WinningPattern3x3Tests(unittest.TestCase):
     def setUp(self):
+        ROW_COUNT = 3
+        COLUMN_COUNT = 3
         self.game_board = create_game_board(ROW_COUNT, COLUMN_COUNT)
 
 
-    def test_function_check_win_3x3_X_token(self):
+    def test_function_check_win_3x3_return_winning_X_token(self):
         mark_cell(self.game_board, X_TOKEN, (1,1))
         mark_cell(self.game_board, X_TOKEN, (2,2))
         mark_cell(self.game_board, X_TOKEN, (3,3))
@@ -94,7 +96,7 @@ class WinningPatternTests(unittest.TestCase):
         self.assertEqual(check_win_3x3(self.game_board), X_TOKEN)
  
 
-    def test_function_check_win_3x3_O_token(self):
+    def test_function_check_win_3x3_return_winning_O_token(self):
         mark_cell(self.game_board, O_TOKEN, (1,3))
         mark_cell(self.game_board, O_TOKEN, (2,2))
         mark_cell(self.game_board, O_TOKEN, (3,1))
@@ -164,6 +166,286 @@ class WinningPatternTests(unittest.TestCase):
         mark_cell(self.game_board, O_TOKEN, (3,1))
 
         self.assertEqual(check_win_3x3(self.game_board), O_TOKEN)
+
+
+class WinningPattern5x5Tests(unittest.TestCase):
+    def setUp(self):
+        ROW_COUNT = 5
+        COLUMN_COUNT = 5
+        self.game_board = create_game_board(ROW_COUNT, COLUMN_COUNT)
+
+
+    def test_function_check_win_5x5_return_winning_X_token(self):
+        mark_cell(self.game_board, X_TOKEN, (1,1))
+        mark_cell(self.game_board, X_TOKEN, (2,2))
+        mark_cell(self.game_board, X_TOKEN, (3,3))
+        mark_cell(self.game_board, X_TOKEN, (4,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), X_TOKEN)
+ 
+
+    def test_function_check_win_5x5_return_winning_O_token(self):
+        mark_cell(self.game_board, O_TOKEN, (2,2))
+        mark_cell(self.game_board, O_TOKEN, (3,3))
+        mark_cell(self.game_board, O_TOKEN, (4,4))
+        mark_cell(self.game_board, O_TOKEN, (5,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+        
+
+    def test_function_check_win_5x5_horizontal_patterns(self):
+        """Test all 10 horizontal winning cases"""
+        mark_cell(self.game_board, O_TOKEN, (1,1))
+        mark_cell(self.game_board, O_TOKEN, (1,2))
+        mark_cell(self.game_board, O_TOKEN, (1,3))
+        mark_cell(self.game_board, O_TOKEN, (1,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+        
+        mark_cell(self.game_board, O_TOKEN, (1,2))
+        mark_cell(self.game_board, O_TOKEN, (1,3))
+        mark_cell(self.game_board, O_TOKEN, (1,4))
+        mark_cell(self.game_board, O_TOKEN, (1,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,1))
+        mark_cell(self.game_board, O_TOKEN, (2,2))
+        mark_cell(self.game_board, O_TOKEN, (2,3))
+        mark_cell(self.game_board, O_TOKEN, (2,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,2))
+        mark_cell(self.game_board, O_TOKEN, (2,3))
+        mark_cell(self.game_board, O_TOKEN, (2,4))
+        mark_cell(self.game_board, O_TOKEN, (2,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (3,1))
+        mark_cell(self.game_board, O_TOKEN, (3,2))
+        mark_cell(self.game_board, O_TOKEN, (3,3))
+        mark_cell(self.game_board, O_TOKEN, (3,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (3,2))
+        mark_cell(self.game_board, O_TOKEN, (3,3))
+        mark_cell(self.game_board, O_TOKEN, (3,4))
+        mark_cell(self.game_board, O_TOKEN, (3,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (4,1))
+        mark_cell(self.game_board, O_TOKEN, (4,2))
+        mark_cell(self.game_board, O_TOKEN, (4,3))
+        mark_cell(self.game_board, O_TOKEN, (4,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (4,2))
+        mark_cell(self.game_board, O_TOKEN, (4,3))
+        mark_cell(self.game_board, O_TOKEN, (4,4))
+        mark_cell(self.game_board, O_TOKEN, (4,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (5,1))
+        mark_cell(self.game_board, O_TOKEN, (5,2))
+        mark_cell(self.game_board, O_TOKEN, (5,3))
+        mark_cell(self.game_board, O_TOKEN, (5,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (5,2))
+        mark_cell(self.game_board, O_TOKEN, (5,3))
+        mark_cell(self.game_board, O_TOKEN, (5,4))
+        mark_cell(self.game_board, O_TOKEN, (5,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+        
+
+    def test_function_check_win_5x5_vertical_patterns(self):
+        """Test all 10 vertical winning cases"""
+        mark_cell(self.game_board, O_TOKEN, (1,1))
+        mark_cell(self.game_board, O_TOKEN, (2,1))
+        mark_cell(self.game_board, O_TOKEN, (3,1))
+        mark_cell(self.game_board, O_TOKEN, (4,1))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,1))
+        mark_cell(self.game_board, O_TOKEN, (3,1))
+        mark_cell(self.game_board, O_TOKEN, (4,1))
+        mark_cell(self.game_board, O_TOKEN, (5,1))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (1,2))
+        mark_cell(self.game_board, O_TOKEN, (2,2))
+        mark_cell(self.game_board, O_TOKEN, (3,2))
+        mark_cell(self.game_board, O_TOKEN, (4,2))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,2))
+        mark_cell(self.game_board, O_TOKEN, (3,2))
+        mark_cell(self.game_board, O_TOKEN, (4,2))
+        mark_cell(self.game_board, O_TOKEN, (5,2))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (1,3))
+        mark_cell(self.game_board, O_TOKEN, (2,3))
+        mark_cell(self.game_board, O_TOKEN, (3,3))
+        mark_cell(self.game_board, O_TOKEN, (4,3))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,3))
+        mark_cell(self.game_board, O_TOKEN, (3,3))
+        mark_cell(self.game_board, O_TOKEN, (4,3))
+        mark_cell(self.game_board, O_TOKEN, (5,3))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (1,4))
+        mark_cell(self.game_board, O_TOKEN, (2,4))
+        mark_cell(self.game_board, O_TOKEN, (3,4))
+        mark_cell(self.game_board, O_TOKEN, (4,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,4))
+        mark_cell(self.game_board, O_TOKEN, (3,4))
+        mark_cell(self.game_board, O_TOKEN, (4,4))
+        mark_cell(self.game_board, O_TOKEN, (5,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (1,5))
+        mark_cell(self.game_board, O_TOKEN, (2,5))
+        mark_cell(self.game_board, O_TOKEN, (3,5))
+        mark_cell(self.game_board, O_TOKEN, (4,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,5))
+        mark_cell(self.game_board, O_TOKEN, (3,5))
+        mark_cell(self.game_board, O_TOKEN, (4,5))
+        mark_cell(self.game_board, O_TOKEN, (5,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+
+    def test_function_check_win_5x5_diagonal_patterns(self):
+        """Test all 8 diagonal winning cases"""
+        mark_cell(self.game_board, O_TOKEN, (1,1))
+        mark_cell(self.game_board, O_TOKEN, (2,2))
+        mark_cell(self.game_board, O_TOKEN, (3,3))
+        mark_cell(self.game_board, O_TOKEN, (4,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,2))
+        mark_cell(self.game_board, O_TOKEN, (3,3))
+        mark_cell(self.game_board, O_TOKEN, (4,4))
+        mark_cell(self.game_board, O_TOKEN, (5,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (1,5))
+        mark_cell(self.game_board, O_TOKEN, (2,4))
+        mark_cell(self.game_board, O_TOKEN, (3,3))
+        mark_cell(self.game_board, O_TOKEN, (4,2))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,4))
+        mark_cell(self.game_board, O_TOKEN, (3,3))
+        mark_cell(self.game_board, O_TOKEN, (4,2))
+        mark_cell(self.game_board, O_TOKEN, (5,1))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,1))
+        mark_cell(self.game_board, O_TOKEN, (3,2))
+        mark_cell(self.game_board, O_TOKEN, (4,3))
+        mark_cell(self.game_board, O_TOKEN, (5,4))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (1,2))
+        mark_cell(self.game_board, O_TOKEN, (2,3))
+        mark_cell(self.game_board, O_TOKEN, (3,4))
+        mark_cell(self.game_board, O_TOKEN, (4,5))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (1,4))
+        mark_cell(self.game_board, O_TOKEN, (2,3))
+        mark_cell(self.game_board, O_TOKEN, (3,2))
+        mark_cell(self.game_board, O_TOKEN, (4,1))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
+
+        reset_game_board(self.game_board)
+
+        mark_cell(self.game_board, O_TOKEN, (2,5))
+        mark_cell(self.game_board, O_TOKEN, (3,4))
+        mark_cell(self.game_board, O_TOKEN, (4,3))
+        mark_cell(self.game_board, O_TOKEN, (5,2))
+
+        self.assertEqual(check_win_5x5(self.game_board), O_TOKEN)
 
 
 class ComputerAiTests(unittest.TestCase):
